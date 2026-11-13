@@ -813,7 +813,7 @@ try{await Promise.race([getDL(),new Promise(r=>setTimeout(r,4000))]);if(DL){try{
 if(!done){try{const u=URL.createObjectURL(new Blob([data],{type:mime})),a=document.createElement("a");a.href=u;a.download=fn;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500);say("Download started for "+fn+".")}catch(er){say("Saving is blocked here.")}}};
 showModal("Export Post Campaign Review PPT",wrap);const c2=wrap.querySelector("#pcx2");if(c2)c2.onclick=()=>{$("modal").hidden=true}}
 (function(){const b=document.getElementById("xpcr");if(b)b.onclick=pcrDialog})();
-window.__svSave=async function(fn,data){const mime="application/vnd.openxmlformats-officedocument.presentationml.presentation";let done=false;try{await Promise.race([getDL(),new Promise(r=>setTimeout(r,4000))]);if(DL){try{await DL.save({filename:fn,data:new Blob([data],{type:mime})});return "Saved "+fn+". Check your downloads."}catch(er){if(er&&er.code==="declined")return "Save cancelled."}}}catch(er){}
+window.__svSave=async function(fn,data){const mime=arguments[2]||"application/vnd.openxmlformats-officedocument.presentationml.presentation";let done=false;try{await Promise.race([getDL(),new Promise(r=>setTimeout(r,4000))]);if(DL){try{await DL.save({filename:fn,data:new Blob([data],{type:mime})});return "Saved "+fn+". Check your downloads."}catch(er){if(er&&er.code==="declined")return "Save cancelled."}}}catch(er){}
 try{const u=URL.createObjectURL(new Blob([data],{type:mime})),a=document.createElement("a");a.href=u;a.download=fn;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500);return "Download started for "+fn+"."}catch(er){return "Saving is blocked here."}};
 
 
