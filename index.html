@@ -885,7 +885,7 @@ try{const u=URL.createObjectURL(new Blob([data],{type:mime})),a=document.createE
 
 
 
-const PWREC={"s": "QYELZKirEWQUX5GPFZ7Fog==", "n": 250000, "i": "PVOc2HngpN6XZwIO", "w": "Uge7vogAheJw0IGbklUE64iWsxzFZ9h0awxi76tj88a30m8LcBAnKR7rV3rRoeX6"};let REPK=null,REPRAW=null;
+const PWREC={"s": "4LZojg72+rp3sTOlGQSAnQ==", "n": 250000, "i": "zk9wvV9vEkMuixav", "w": "SKnJzQ8s4SWhc2YnAmEbHTkm0tPPoaEOu/i/OkGYm2pOJ2MX3UQdCyFkf1IvfcyI"};let REPK=null,REPRAW=null;
 async function pwKey(pw,rec){const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",salt:b64buf(rec.s),iterations:rec.n,hash:"SHA-256"},k,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
 async function getPwRec(){try{const o=await ermCtx();if(o.db){const d=await o.db.doc("ermusers/_reppw").get();const v=d&&d.exists?d.data():null;if(v&&v.s&&v.i&&v.w&&v.n)return v}}catch(e){}return PWREC}
 async function unlockRep(pw){const rec=await getPwRec();if(!rec)throw new Error("norec");const wk=await pwKey(pw,rec);let raw;try{raw=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64buf(rec.i)},wk,b64buf(rec.w))}catch(e){throw new Error("bad")}REPRAW=raw;REPK=await crypto.subtle.importKey("raw",raw,"AES-GCM",false,["decrypt"])}
