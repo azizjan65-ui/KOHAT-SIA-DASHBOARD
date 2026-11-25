@@ -432,7 +432,7 @@ window.SV={open(h){let tab=(h.split("-")[1])||"glob";if(tab==="ov")tab="glob";S.
  let root=$("#svroot");if(!root){root=document.createElement("div");root.id="svroot";document.body.appendChild(root);const st=document.createElement("style");st.textContent=CSS;document.head.appendChild(st)}
  root.hidden=false;root.innerHTML='<p style="padding:30px">Loading surveillance data\u2026</p>';
  if(DATA){render();return}
- fetch(window.SV_URL||"surv/surv.json").then(r=>r.json()).then(d=>{DATA=d;F=K();S.y=Math.max(...d.C.map(c=>c[F.y]));render()}).catch(e=>{root.innerHTML='<p style="padding:30px">Could not load the surveillance data. '+esc(e.message||e)+"</p>"})},
+ fetch(window.SV_URL||"surv/surv.json").then(r=>r.json()).then(d=>{DATA=d;{const a=new Date(d.asof+"T00:00:00");S.cm=a.getMonth()+1;S.cd=a.getDate()}F=K();S.y=Math.max(...d.C.map(c=>c[F.y]));render()}).catch(e=>{root.innerHTML='<p style="padding:30px">Could not load the surveillance data. '+esc(e.message||e)+"</p>"})},
  close(){const r=$("#svroot");if(r)r.hidden=true}};
 })();
 
