@@ -434,10 +434,10 @@ const CSS=`.svbody .svcard h3{font-size:14.5px;letter-spacing:0;font-weight:800;
 `;
 window.SV={open(h){let tab=(h.split("-")[1])||"glob";if(tab==="ov")tab="glob";S.tab=TABS.some(t=>t[0]===tab)?tab:"glob";
  let root=$("#svroot");if(!root){root=document.createElement("div");root.id="svroot";document.body.appendChild(root);const st=document.createElement("style");st.textContent=CSS;document.head.appendChild(st)}
- root.hidden=false;root.innerHTML='<p style="padding:30px">Loading surveillance data\u2026</p>';
+ document.documentElement.style.overflow="hidden";document.body.style.overflow="hidden"; root.hidden=false;root.innerHTML='<p style="padding:30px">Loading surveillance data\u2026</p>';
  if(DATA){render();return}
  fetch(window.SV_URL||"surv/surv.json").then(r=>r.json()).then(d=>{DATA=d;{const a=new Date(d.asof+"T00:00:00");S.cm=a.getMonth()+1;S.cd=a.getDate()}F=K();S.y=Math.max(...d.C.map(c=>c[F.y]));render()}).catch(e=>{root.innerHTML='<p style="padding:30px">Could not load the surveillance data. '+esc(e.message||e)+"</p>"})},
- close(){const r=$("#svroot");if(r)r.hidden=true}};
+ close(){const r=$("#svroot");if(r)r.hidden=true;document.documentElement.style.overflow="";document.body.style.overflow=""}};
 })();
 
 (function(){const root=()=>document.getElementById("svroot");function fix(){const r=root();if(!r)return;r.querySelectorAll("svg.svmap").forEach(sv=>{if(sv.dataset.nb)return;const vb=(sv.getAttribute("viewBox")||"").split(/\s+/).map(Number);if(vb.length<4)return;const q=[...window.__NBQ].reverse().find(e=>vb[2]>=e.W&&vb[2]<=e.W+700&&vb[3]>=e.H&&vb[3]<=e.H+500);if(!q)return;sv.dataset.nb=1;sv.insertAdjacentHTML("beforeend",q.t)})}
